@@ -1,0 +1,87 @@
+﻿@model University1.Models.StudentNameIdViewModel
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a asp-action="Create">Add New</a>
+</p>
+<form asp-controller="Students" asp-action="Index" method="get">
+    <p>
+        Name: <input type="text" asp-for="StudentName" />
+        ID: <select asp-for="StudentIDs" asp-items="Model.IDs">
+            <option value="">All</option>
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].StudentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].EnrollmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].AcquiredCredits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].CurrentSemester)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Students[0].EducationLevel)
+            </th>
+            <th> 
+                @Html.DisplayNameFor(model => model.Students[0].Courses) 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Students) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcquiredCredits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentSemester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EducationLevel)
+            </td>
+            <td> 
+                @foreach (var course in item.Courses)
+            {<a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseId"> @course.Course.Title </a> <br />}
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
